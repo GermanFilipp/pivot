@@ -1,23 +1,25 @@
 module Pivot
   class Item
-    VALID_PREFIXES = %W(EREC AZR).freeze
+    VALID_PREFIXES = %w(EREC AZR).freeze
     private_constant :VALID_PREFIXES
-    def initialize(name:, assignee:, points:)
+
+    attr_reader :name, :points
+    attr_accessor :assignee
+
+    def initialize(name:, points:, assignee: nil)
       @name = name
       @assignee = assignee
       @points = points
     end
 
-    attr_reader :name, :assignee, :points
-    
     def +(item)
       points + item.points
     end
-    
+
     def project_code
       name.split("-").first
     end
-    
+
     def valid?
       VALID_PREFIXES.include? project_code
     end
